@@ -6,7 +6,7 @@ export const ZahrionTechBadge: React.FC = () => {
 
   return (
     <aside
-      aria-label="Agency attribution and demo details"
+      aria-label="Agency attribution"
       onMouseEnter={() => setExpanded(true)}
       onMouseLeave={() => setExpanded(false)}
       className="fixed bottom-16 sm:bottom-6 right-4 sm:right-6 z-[80] transition-all duration-300 pointer-events-auto"
@@ -32,7 +32,7 @@ export const ZahrionTechBadge: React.FC = () => {
         {expanded && (
           <div className="hidden sm:flex items-center pl-2 border-l border-white/10 text-[11px] text-[#8A7A6B]">
             <Sparkles className="w-3 h-3 text-[#D9622B] mr-1" />
-            <span>$15k+ Ecosystem</span>
+            <span>Hospitality Platform</span>
           </div>
         )}
       </a>

@@ -49,11 +49,11 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate, currentRoute }) => {
             onClick={() => onNavigate('/')}
             className="flex items-center gap-3 group text-left focus:outline-none"
           >
-            <div className="w-10 h-10 rounded-sm overflow-hidden border border-white/20 group-hover:border-[var(--ember)] transition-colors">
+            <div className="w-11 h-11 rounded-full overflow-hidden border border-[#C79A55]/40 group-hover:border-[var(--ember)] transition-all shadow-[0_2px_12px_rgba(0,0,0,0.6)] bg-black flex-shrink-0">
               <img
                 src="/images/hero/logo.jpg"
                 alt="The Mez Logo"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               />
             </div>
             <div>

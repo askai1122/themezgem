@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, Calendar, MapPin } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface HeroProps {
   onNavigate: (route: string) => void;
@@ -36,40 +36,20 @@ const HERO_CLIPS = [
 export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
   const [activeClipIndex, setActiveClipIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Auto-advance hero clips every 6 seconds
+  // Auto-advance hero background clips every 5.5 seconds with smooth animation
   useEffect(() => {
     if (isPaused) return;
 
-    const interval = 50; // update progress every 50ms
-    const totalDuration = 6000;
-    const step = (interval / totalDuration) * 100;
-
     const timer = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          setActiveClipIndex((idx) => (idx + 1) % HERO_CLIPS.length);
-          return 0;
-        }
-        return prev + step;
-      });
-    }, interval);
+      setActiveClipIndex((idx) => (idx + 1) % HERO_CLIPS.length);
+    }, 5500);
 
     return () => clearInterval(timer);
-  }, [isPaused, activeClipIndex]);
-
-  // Handle active clip change
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.currentTime = 0;
-      videoRef.current.play().catch(() => {});
-    }
-  }, [activeClipIndex]);
+  }, [isPaused]);
 
   // Compute live open status (Daily 12pm - 10pm)
-  const isCurrentlyOpen = true; // Always display live operational status per prompt
+  const isCurrentlyOpen = true;
 
   return (
     <section
@@ -77,25 +57,34 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
       onMouseLeave={() => setIsPaused(false)}
       className="relative min-h-[92vh] lg:min-h-screen flex items-end lg:items-center pt-24 pb-16 overflow-hidden bg-[#15100C]"
     >
-      {/* Background Video Engine */}
-      <div className="absolute inset-0 z-0">
-        <video
-          ref={videoRef}
-          key={HERO_CLIPS[activeClipIndex].src}
-          src={HERO_CLIPS[activeClipIndex].src}
-          poster={HERO_CLIPS[activeClipIndex].poster}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="w-full h-full object-cover"
-        />
+      {/* Background Animated Image & Video Engine with Crossfade */}
+      <div className="absolute inset-0 z-0 overflow-hidden bg-[#15100C]">
+        <AnimatePresence mode="sync">
+          <motion.div
+            key={HERO_CLIPS[activeClipIndex].src}
+            initial={{ opacity: 0, scale: 1.08 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.96 }}
+            transition={{ duration: 1.1, ease: [0.25, 1, 0.5, 1] }}
+            className="absolute inset-0 w-full h-full"
+          >
+            <video
+              src={HERO_CLIPS[activeClipIndex].src}
+              poster={HERO_CLIPS[activeClipIndex].poster}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
+        </AnimatePresence>
 
         {/* Cinematic Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#15100C] via-[#15100C]/60 to-[#15100C]/70" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#15100C] via-[#15100C]/80 to-transparent lg:w-3/4" />
-        <div className="video-vignette-warm" />
-        <div className="video-overlay-grain opacity-40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#15100C] via-[#15100C]/60 to-[#15100C]/70 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#15100C] via-[#15100C]/80 to-transparent lg:w-3/4 pointer-events-none" />
+        <div className="video-vignette-warm pointer-events-none" />
+        <div className="video-overlay-grain opacity-40 pointer-events-none" />
       </div>
 
       {/* Hero Foreground Content */}

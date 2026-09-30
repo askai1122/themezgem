@@ -94,7 +94,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({
               <img
                 src="/images/hero/logo.jpg"
                 alt="The Mez Logo"
-                className="w-8 h-8 object-cover flex-shrink-0 border border-white/15"
+                className="w-8 h-8 rounded-full object-cover flex-shrink-0 border border-[#C79A55]/40"
               />
               {!sidebarCollapsed && (
                 <div>

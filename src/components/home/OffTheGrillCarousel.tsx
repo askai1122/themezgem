@@ -181,7 +181,7 @@ export const OffTheGrillCarousel: React.FC<OffTheGrillCarouselProps> = ({ onSele
                     : 'border-white/10 hover:border-white/25 opacity-90 hover:opacity-100'
                 }`}
               >
-                {/* Media Container: Active card plays video loop, inactive stays static */}
+                {/* Media Container: Active card plays video loop, inactive stays static with smooth animation */}
                 <div className="relative aspect-[16/10] overflow-hidden bg-black">
                   {isActive && dish.video ? (
                     <video
@@ -191,13 +191,13 @@ export const OffTheGrillCarousel: React.FC<OffTheGrillCarouselProps> = ({ onSele
                       muted
                       loop
                       playsInline
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover scale-105 transition-transform duration-700"
                     />
                   ) : (
                     <img
                       src={dish.image}
                       alt={dish.name}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                       loading="lazy"
                     />
                   )}

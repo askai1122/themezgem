@@ -1,16 +1,11 @@
 import React, { useEffect } from 'react';
-import { useOrderStore, useReservationStore, useMenuStore } from '../../stores';
+import { useReservationStore, useMenuStore } from '../../stores';
 import {
   DollarSign,
   ShoppingBag,
   Calendar,
   Users,
   TrendingUp,
-  Clock,
-  ArrowRight,
-  Flame,
-  CheckCircle2,
-  AlertCircle,
 } from 'lucide-react';
 
 interface AdminDashboardPageProps {
@@ -18,17 +13,14 @@ interface AdminDashboardPageProps {
 }
 
 export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNavigate }) => {
-  const { orders, loadOrders, updateOrderStatus } = useOrderStore();
   const { reservations, loadReservations } = useReservationStore();
   const { items, loadMenu } = useMenuStore();
 
   useEffect(() => {
-    loadOrders();
     loadReservations();
     loadMenu();
-  }, [loadOrders, loadReservations, loadMenu]);
+  }, [loadReservations, loadMenu]);
 
-  const recentOrders = orders.slice(0, 5);
   const recentReservations = reservations.slice(0, 4);
 
   return (
@@ -126,137 +118,47 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
         </div>
       </div>
 
-      {/* Main Split: Live Order Queue & Reservations */}
+      {/* Main Split: Reservations & Menu Operations */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Left: Live Kitchen Order Pass (7 cols) */}
+        {/* Reservations Overview (7 cols) */}
         <div className="lg:col-span-7 bg-[#2B1D14] border border-white/10 p-6 space-y-4">
-          <div className="flex items-center justify-between border-b border-white/10 pb-4">
-            <div>
-              <h2 className="text-lg font-bold uppercase font-display text-[var(--flour)] flex items-center gap-2">
-                <Flame className="w-4 h-4 text-[var(--ember)]" />
-                <span>LIVE KITCHEN PASS (RECENT ORDERS)</span>
-              </h2>
-              <p className="text-xs text-[var(--smoke)] mt-0.5">
-                Update status below to reflect live on customer tracking screen
-              </p>
-            </div>
+          <div className="flex items-center justify-between border-b border-white/10 pb-3">
+            <h2 className="text-base font-bold uppercase font-display text-[var(--flour)] flex items-center gap-2">
+              <Calendar className="w-4 h-4 text-[var(--gold-line)]" />
+              <span>UPCOMING RESERVATIONS</span>
+            </h2>
             <button
-              onClick={() => onNavigate('/admin/orders')}
+              onClick={() => onNavigate('/admin/reservations')}
               className="text-xs font-bold text-[var(--ember)] hover:underline uppercase"
             >
-              All Orders →
+              View All →
             </button>
           </div>
 
           <div className="space-y-3">
-            {recentOrders.map((order) => (
+            {recentReservations.map((res) => (
               <div
-                key={order.id}
-                className="p-4 bg-[#15100C] border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                key={res.id}
+                className="p-4 bg-[#15100C] border border-white/10 flex items-center justify-between text-xs"
               >
                 <div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-sm font-bold text-[var(--flour)]">
-                      #{order.id}
-                    </span>
-                    <span className="text-xs font-bold text-[var(--flour)] uppercase">
-                      · {order.customerName}
-                    </span>
-                    <span
-                      className={`text-[9px] uppercase font-bold px-2 py-0.5 border ${
-                        order.status === 'CONFIRMED'
-                          ? 'border-[var(--ember)] text-[var(--ember)] bg-[var(--ember)]/10'
-                          : order.status === 'READY FOR PICKUP'
-                          ? 'border-emerald-500 text-emerald-400 bg-emerald-950/30'
-                          : order.status === 'COMPLETED'
-                          ? 'border-white/20 text-[var(--smoke)]'
-                          : 'border-blue-400 text-blue-300'
-                      }`}
-                    >
-                      {order.status}
-                    </span>
+                  <div className="font-bold text-[var(--flour)] uppercase text-sm">
+                    {res.name} ({res.guests} Guests)
                   </div>
-
                   <div className="text-xs text-[var(--smoke)] mt-1">
-                    {order.items.map((i) => `${i.quantity}× ${i.name}`).join(', ')}
-                  </div>
-                  <div className="text-[11px] text-[var(--smoke)] mt-0.5">
-                    Pickup: {order.pickupTime} · <strong className="font-mono text-[var(--flour)]">${order.total.toFixed(2)}</strong>
+                    {res.date} at <strong className="text-[var(--gold-line)]">{res.time}</strong> · {res.phone}
                   </div>
                 </div>
-
-                {/* Quick Status Advance Actions */}
-                <div className="flex items-center gap-2">
-                  {order.status === 'RECEIVED' && (
-                    <button
-                      onClick={() => updateOrderStatus(order.id, 'CONFIRMED')}
-                      className="px-3 py-1.5 bg-[#2B1D14] hover:bg-black text-[var(--gold-line)] border border-[var(--gold-line)]/40 text-[10px] font-bold uppercase"
-                    >
-                      Confirm
-                    </button>
-                  )}
-                  {order.status === 'CONFIRMED' && (
-                    <button
-                      onClick={() => updateOrderStatus(order.id, 'READY FOR PICKUP')}
-                      className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold uppercase shadow"
-                    >
-                      Mark Ready
-                    </button>
-                  )}
-                  {order.status === 'READY FOR PICKUP' && (
-                    <button
-                      onClick={() => updateOrderStatus(order.id, 'COMPLETED')}
-                      className="px-3 py-1.5 bg-black text-emerald-400 border border-emerald-500/40 text-[10px] font-bold uppercase"
-                    >
-                      Complete
-                    </button>
-                  )}
-                </div>
+                <span className="text-[10px] uppercase font-bold text-emerald-400 bg-emerald-950/40 px-3 py-1 border border-emerald-500/30">
+                  {res.status}
+                </span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Right: Table Bookings & Popular Items (5 cols) */}
+        {/* Right: Menu Catalog Status & Operations (5 cols) */}
         <div className="lg:col-span-5 space-y-6">
-          {/* Reservation List */}
-          <div className="bg-[#2B1D14] border border-white/10 p-6 space-y-4">
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
-              <h2 className="text-base font-bold uppercase font-display text-[var(--flour)] flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-[var(--gold-line)]" />
-                <span>UPCOMING RESERVATIONS</span>
-              </h2>
-              <button
-                onClick={() => onNavigate('/admin/reservations')}
-                className="text-xs font-bold text-[var(--ember)] hover:underline uppercase"
-              >
-                View All →
-              </button>
-            </div>
-
-            <div className="space-y-2.5">
-              {recentReservations.map((res) => (
-                <div
-                  key={res.id}
-                  className="p-3 bg-[#15100C] border border-white/10 flex items-center justify-between text-xs"
-                >
-                  <div>
-                    <div className="font-bold text-[var(--flour)] uppercase">
-                      {res.name} ({res.guests} Guests)
-                    </div>
-                    <div className="text-[11px] text-[var(--smoke)]">
-                      {res.date} at <strong className="text-[var(--gold-line)]">{res.time}</strong>
-                    </div>
-                  </div>
-                  <span className="text-[10px] uppercase font-bold text-emerald-400 bg-emerald-950/40 px-2 py-0.5 border border-emerald-500/30">
-                    {res.status}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Quick Menu Overview */}
           <div className="bg-[#2B1D14] border border-white/10 p-6 space-y-3">
             <h2 className="text-base font-bold uppercase font-display text-[var(--flour)] border-b border-white/10 pb-3">
               MENU CATALOG STATUS
@@ -271,6 +173,26 @@ export const AdminDashboardPage: React.FC<AdminDashboardPageProps> = ({ onNaviga
             >
               MANAGE MENU & VIDEO ASSETS →
             </button>
+          </div>
+
+          <div className="bg-[#2B1D14] border border-white/10 p-6 space-y-3">
+            <h2 className="text-base font-bold uppercase font-display text-[var(--flour)] border-b border-white/10 pb-3">
+              OPERATIONS SHORTCUTS
+            </h2>
+            <div className="grid grid-cols-2 gap-2.5">
+              <button
+                onClick={() => onNavigate('/admin/orders')}
+                className="p-3 bg-[#15100C] hover:bg-black text-[var(--flour)] border border-white/15 text-xs font-bold uppercase text-center"
+              >
+                Orders Manager
+              </button>
+              <button
+                onClick={() => onNavigate('/admin/reservations')}
+                className="p-3 bg-[#15100C] hover:bg-black text-[var(--flour)] border border-white/15 text-xs font-bold uppercase text-center"
+              >
+                Reservations
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Phone, Mail, Clock, ExternalLink, Shield } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, ExternalLink, Shield, Sparkles } from 'lucide-react';
 
 interface FooterProps {
   onNavigate: (route: string) => void;
@@ -13,11 +13,13 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* Brand Info */}
           <div className="lg:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
-              <img
-                src="/images/hero/logo.jpg"
-                alt="The Mez Logo"
-                className="w-12 h-12 object-cover border border-white/20"
-              />
+              <div className="w-12 h-12 rounded-full overflow-hidden border border-[#C79A55]/40 shadow-lg bg-black flex-shrink-0">
+                <img
+                  src="/images/hero/logo.jpg"
+                  alt="The Mez Logo"
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <div>
                 <div className="text-2xl font-extrabold uppercase font-display tracking-tight text-[var(--flour)]">
                   THE MEZ
@@ -83,13 +85,15 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <p className="text-xs text-[var(--smoke)] leading-relaxed">
               Live kitchen digital operations suite for managers and staff. Track live orders, seats, menu availability, and promotions in real time.
             </p>
-            <button
-              onClick={() => onNavigate('/admin')}
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#2B1D14] hover:bg-[#3D2B1F] text-[var(--flour)] border border-white/15 text-xs font-bold uppercase tracking-wider transition-colors"
-            >
-              <Shield className="w-4 h-4 text-[var(--gold-line)]" />
-              <span>ACCESS ADMIN PORTAL</span>
-            </button>
+            <div className="pt-1">
+              <button
+                onClick={() => onNavigate('/admin')}
+                className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#2B1D14] hover:bg-[#3D2B1F] text-[var(--flour)] border border-white/15 text-xs font-bold uppercase tracking-wider transition-colors"
+              >
+                <Shield className="w-4 h-4 text-[var(--gold-line)]" />
+                <span>ACCESS ADMIN PORTAL</span>
+              </button>
+            </div>
           </div>
         </div>
 

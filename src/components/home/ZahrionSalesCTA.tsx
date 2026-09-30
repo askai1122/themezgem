@@ -21,7 +21,7 @@ export const ZahrionSalesCTA: React.FC = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10 space-y-6">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-[#15100C]/80 border border-[#D9622B]/40 text-xs font-bold uppercase tracking-wider text-[var(--flour)]">
           <Sparkles className="w-3.5 h-3.5 text-[var(--gold-line)]" />
-          <span>BESPOKE HOSPITALITY DIGITAL ECOSYSTEM</span>
+          <span>THE MEZ HOSPITALITY PLATFORM</span>
         </div>
 
         <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold uppercase font-display tracking-tight text-[var(--flour)] leading-tight">

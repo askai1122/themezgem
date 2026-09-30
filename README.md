@@ -18,4 +18,3 @@ View your app in AI Studio: https://ai.studio/apps/02acf0a3-6b88-42db-8749-52b95
 2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
 3. Run the app:
    `npm run dev`
-"# themezgem" 
