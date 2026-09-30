@@ -1,0 +1,850 @@
+import { MenuItem, RestaurantSettings, EventItem, Promotion, Customer, GalleryItem, RewardItem } from '../types';
+
+export const INITIAL_SETTINGS: RestaurantSettings = {
+  name: 'The Mez Bar & Grill',
+  address: '#9 – 1267 Garrison Road',
+  city: 'Fort Erie, Ontario',
+  postalCode: 'L2A 1P2',
+  phone: '289-320-9866',
+  email: 'info@themez.ca',
+  hours: 'Daily, 12:00 PM – 10:00 PM',
+  isOpen: true,
+  orderAccepting: true,
+  reservationsOpen: true,
+  taxRate: 0.13, // Ontario HST
+};
+
+export const INITIAL_MENU: MenuItem[] = [
+  // APPETIZERS
+  {
+    id: 'app-1',
+    name: "Basket O'Fries",
+    category: 'Appetizers',
+    price: 5.99,
+    description: "Crispy golden seasoned fries served piping hot.",
+    image: '/images/food/basket-o-fries.jpg',
+    video: '/video/categories/appetizers.mp4',
+    tags: ['Popular', 'Vegetarian'],
+    available: true,
+    featured: false,
+  },
+  {
+    id: 'app-2',
+    name: "Basket O'Rings",
+    category: 'Appetizers',
+    price: 7.45,
+    description: "Thick-cut, golden-battered onion rings with savoury crunch.",
+    image: '/images/food/basket-o-rings.jpg',
+    video: '/video/categories/appetizers.mp4',
+    tags: ['Crispy', 'Vegetarian'],
+    available: true,
+    featured: true,
+  },
+  {
+    id: 'app-3',
+    name: "Frwings",
+    category: 'Appetizers',
+    price: 11.95,
+    description: "Best of all worlds: wings, fries, and onion rings.",
+    image: '/images/food/wings.jpg',
+    video: '/video/categories/appetizers.mp4',
+    tags: ['House Specialty'],
+    available: true,
+    featured: false,
+  },
+  {
+    id: 'app-4',
+    name: "Falafel Pops",
+    category: 'Appetizers',
+    price: 6.99,
+    description: "Crispy bite-sized falafels packed with aromatic herbs and spices.",
+    image: '/images/food/basket-o-fries.jpg',
+    tags: ['Vegetarian'],
+    available: true,
+    featured: false,
+  },
+  {
+    id: 'app-5',
+    name: "Chips & Dip",
+    category: 'Appetizers',
+    price: 5.45,
+    description: "Tortilla chips and tangy salsa.",
+    image: '/images/food/chips-dip.jpg',
+    tags: ['Vegetarian'],
+    available: true,
+    featured: false,
+  },
+  {
+    id: 'app-6',
+    name: "Mozza Sticks",
+    category: 'Appetizers',
+    price: 11.99,
+    description: "Golden crumb-coated melted mozzarella sticks with marinara.",
+    image: '/images/food/mozza-sticks.jpg',
+    tags: ['Vegetarian'],
+    available: true,
+    featured: false,
+  },
+  {
+    id: 'app-7',
+    name: "Jalapeno Poppers",
+    category: 'Appetizers',
+    price: 11.99,
+    description: "Spicy jalapenos stuffed with rich melted cream cheese.",
+    image: '/images/food/jalapeno-poppers.jpg',
+    tags: ['Spicy', 'Vegetarian'],
+    available: true,
+    featured: false,
+  },
+  {
+    id: 'app-8',
+    name: "Wings",
+    category: 'Appetizers',
+    price: 17.99,
+    priceVariants: [
+      { label: '1 LB', price: 17.99 },
+      { label: '2 LB', price: 24.99 },
+    ],
+    description: "Breaded or non-breaded wings with your choice of sauce.",
+    image: '/images/food/wings.jpg',
+    video: '/video/hero/hero-02.mp4',
+    tags: ['Fan Favorite', 'Signature'],
+    available: true,
+    featured: true,
+  },
+  {
+    id: 'app-9',
+    name: "Boneless Wings",
+    category: 'Appetizers',
+    price: 12.95,
+    description: "Boneless wings with your choice of sauce.",
+    image: '/images/food/boneless-wings.jpg',
+    tags: ['Tender Chicken'],
+    available: true,
+    featured: false,
+  },
+  {
+    id: 'app-10',
+    name: "Quesadilla",
+    category: 'Appetizers',
+    price: 11.99,
+    description: "Mixed cheeses, peppers, tomatoes and green onions in a grilled flour tortilla, served with sour cream and salsa.",
+    image: '/images/food/chips-dip.jpg',
+    tags: ['Vegetarian Option'],
+    available: true,
+    featured: false,
+    customizable: true,
+    toppings: [
+      { name: 'Add Buffalo Chicken', price: 4.00 },
+      { name: 'Add Ground Beef', price: 4.00 }
+    ]
+  },
+  {
+    id: 'app-11',
+    name: "Nacho Average Nachos",
+    category: 'Appetizers',
+    price: 14.95,
+    description: "Fluffy tortilla chips loaded with an irresponsible amount of cheese and fresh toppings.",
+    image: '/images/food/chips-dip.jpg',
+    tags: ['Loaded'],
+    available: true,
+    featured: true,
+    customizable: true,
+    toppings: [
+      { name: 'Add Buffalo Chicken', price: 4.00 },
+      { name: 'Add Ground Beef', price: 4.00 }
+    ]
+  },
+  {
+    id: 'app-12',
+    name: "Fries A La Mez",
+    category: 'Appetizers',
+    price: 14.95,
+    description: "Crispy seasoned fries layered with melted cheese, zesty sauce and savoury toppings.",
+    image: '/images/food/basket-o-fries.jpg',
+    tags: ['Loaded Signature'],
+    available: true,
+    featured: false,
+    customizable: true,
+    toppings: [
+      { name: 'Add Buffalo Chicken', price: 4.00 },
+      { name: 'Add Ground Beef', price: 4.00 }
+    ]
+  },
+
+  // MEZ BURGER
+  {
+    id: 'burg-1',
+    name: "The Single Mez",
+    category: 'Mez Burger',
+    price: 8.99,
+    description: "One smashed 100% beef pattie topped with lettuce, tomatoes, and onions on a toasted bun.",
+    image: '/images/food/single-mez.jpg',
+    video: '/video/categories/burgers.mp4',
+    tags: ['100% Beef', 'Smash Burger'],
+    available: true,
+    featured: true,
+    customizable: true,
+    toppings: [
+      { name: 'Add Cheese', price: 1.50 },
+      { name: 'Add Bacon', price: 2.50 },
+      { name: 'Caramelized Onions', price: 1.50 },
+      { name: 'Sauteed Mushrooms', price: 1.50 }
+    ]
+  },
+  {
+    id: 'burg-2',
+    name: "The Double Mez",
+    category: 'Mez Burger',
+    price: 10.99,
+    description: "Two smashed 100% beef patties topped with lettuce, tomatoes, and onions on a toasted bun.",
+    image: '/images/food/single-mez.jpg',
+    video: '/video/categories/burgers.mp4',
+    tags: ['Double Beef'],
+    available: true,
+    featured: false,
+    customizable: true,
+    toppings: [
+      { name: 'Add Cheese', price: 1.50 },
+      { name: 'Add Bacon', price: 2.50 },
+      { name: 'Caramelized Onions', price: 1.50 },
+      { name: 'Sauteed Mushrooms', price: 1.50 }
+    ]
+  },
+  {
+    id: 'burg-3',
+    name: "Bacon Cheese Mez",
+    category: 'Mez Burger',
+    price: 14.99,
+    description: "Two smashed 100% beef patties topped with cheese, bacon, lettuce, tomatoes, onions, on a toasted bun.",
+    image: '/images/food/bacon-cheese-mez.jpg',
+    video: '/video/hero/hero-01.mp4',
+    tags: ['Top Seller', 'Signature'],
+    available: true,
+    featured: true,
+    customizable: true,
+    toppings: [
+      { name: 'Caramelized Onions', price: 1.50 },
+      { name: 'Sauteed Mushrooms', price: 1.50 },
+      { name: 'Extra Cheese', price: 1.50 },
+      { name: 'Extra Bacon', price: 2.50 }
+    ]
+  },
+  {
+    id: 'burg-4',
+    name: "The Super Mez",
+    category: 'Mez Burger',
+    price: 16.99,
+    description: "THREE smashed 100% beef patties topped with cheese, bacon, lettuce, tomatoes, onions, on a toasted bun.",
+    image: '/images/food/super-mez.jpg',
+    video: '/video/categories/burgers.mp4',
+    tags: ['Triple Smash', 'Heavyweight'],
+    available: true,
+    featured: true,
+    customizable: true,
+    toppings: [
+      { name: 'Caramelized Onions', price: 1.50 },
+      { name: 'Sauteed Mushrooms', price: 1.50 }
+    ]
+  },
+
+  // HAND-HELD
+  {
+    id: 'hand-1',
+    name: "Ye Olde Chicken Sandwich",
+    category: 'Hand-Held',
+    price: 14.95,
+    description: "Grilled or fried chicken breast on a toasted bun topped with lettuce, tomatoes and pickles. Choice of sauce: BBQ, Buffalo, Ranch.",
+    image: '/images/food/chicken-fingers.jpg',
+    video: '/video/categories/handhelds.mp4',
+    tags: ['Crispy/Grilled'],
+    available: true,
+    featured: false,
+  },
+  {
+    id: 'hand-2',
+    name: "Wrap It Up",
+    category: 'Hand-Held',
+    price: 12.95,
+    description: "Grilled chicken in a warm flour tortilla filled with lettuce, tomatoes, green onions, cheese and sauce: BBQ, Buffalo, Ranch.",
+    image: '/images/food/chicken-fingers.jpg',
+    tags: ['Fresh Wrap'],
+    available: true,
+    featured: false,
+  },
+  {
+    id: 'hand-3',
+    name: "Erie Cheesesteak",
+    category: 'Hand-Held',
+    price: 16.95,
+    description: "Steak grilled with sauteed onions and cheese on a baguette, topped with garlic mayo, lettuce and pickles.",
+    image: '/images/food/erie-cheesesteak.jpg',
+    video: '/video/categories/handhelds.mp4',
+    tags: ['Fort Erie Legend', 'Signature'],
+    available: true,
+    featured: true,
+  },
+  {
+    id: 'hand-4',
+    name: "Pulled Pork",
+    category: 'Hand-Held',
+    price: 12.95,
+    description: "Tender, slow-cooked pulled pork tossed in smoky BBQ sauce, stacked on a toasted bun, topped with lettuce and pickles.",
+    image: '/images/food/pulled-pork.jpg',
+    video: '/video/categories/handhelds.mp4',
+    tags: ['Slow Cooked BBQ'],
+    available: true,
+    featured: true,
+  },
+  {
+    id: 'hand-5',
+    name: "B.L. to the T.",
+    category: 'Hand-Held',
+    price: 9.95,
+    description: "Layers of crispy bacon on a baguette topped with lettuce, tomatoes, and a generous dose of mayo.",
+    image: '/images/food/bacon-cheese-mez.jpg',
+    tags: ['Baguette Classic'],
+    available: true,
+    featured: false,
+  },
+  {
+    id: 'hand-6',
+    name: "Fish Sandwich",
+    category: 'Hand-Held',
+    price: 13.99,
+    description: "Fried beer-battered cod on a bun with lettuce, pickles, and tartar sauce.",
+    image: '/images/food/fish-sandwich.jpg',
+    video: '/video/categories/handhelds.mp4',
+    tags: ['Beer Battered Cod'],
+    available: true,
+    featured: true,
+  },
+  {
+    id: 'hand-7',
+    name: "Falafel Wrap",
+    category: 'Hand-Held',
+    price: 9.99,
+    description: "Savoury falafel wrapped in a tortilla with garlic sauce, lettuce, and tomatoes.",
+    image: '/images/food/chips-dip.jpg',
+    tags: ['Vegetarian'],
+    available: true,
+    featured: false,
+  },
+  {
+    id: 'hand-8',
+    name: "Le Grilled Cheese",
+    category: 'Hand-Held',
+    price: 6.99,
+    description: "Gooey cheese in a toasted bun. Simple. Satisfying.",
+    image: '/images/food/single-mez.jpg',
+    tags: ['Vegetarian'],
+    available: true,
+    featured: false,
+  },
+
+  // PLATES
+  {
+    id: 'plate-1',
+    name: "Steak on the Rocks",
+    category: 'Plates',
+    price: 25.99,
+    description: "8oz steak cooked to your preference, served on a bed of golden fries.",
+    image: '/images/food/steak-on-the-rocks.jpg',
+    video: '/video/hero/hero-03.mp4',
+    tags: ['House Specialty', 'Prime Steak'],
+    available: true,
+    featured: true,
+  },
+  {
+    id: 'plate-2',
+    name: "Steak on the Rocks Jumbo",
+    category: 'Plates',
+    price: 29.99,
+    description: "12oz steak cooked to your preference, served on a bed of golden fries.",
+    image: '/images/food/steak-on-the-rocks.jpg',
+    video: '/video/categories/plates.mp4',
+    tags: ['12oz Cut', 'Hearty'],
+    available: true,
+    featured: true,
+  },
+  {
+    id: 'plate-3',
+    name: "Steak",
+    category: 'Plates',
+    price: 27.99,
+    description: "10oz steak cooked to your preference served with your choice of two sides.",
+    image: '/images/food/steak-on-the-rocks.jpg',
+    tags: ['Two Sides Included'],
+    available: true,
+    featured: false,
+  },
+  {
+    id: 'plate-4',
+    name: "Fish & Chips",
+    category: 'Plates',
+    price: 14.45,
+    priceVariants: [
+      { label: '2pc', price: 14.45 },
+      { label: '3pc', price: 17.45 },
+    ],
+    description: "Beer-battered cod fried to golden perfection, served with fries and tartar sauce.",
+    image: '/images/food/fish-sandwich.jpg',
+    video: '/video/categories/plates.mp4',
+    tags: ['Golden Cod'],
+    available: true,
+    featured: true,
+  },
+  {
+    id: 'plate-5',
+    name: "Chicken Fingers & Fries",
+    category: 'Plates',
+    price: 12.99,
+    description: "Made from 100% chicken breast, served with fries.",
+    image: '/images/food/chicken-fingers.jpg',
+    tags: ['100% Chicken Breast'],
+    available: true,
+    featured: false,
+  },
+  {
+    id: 'plate-6',
+    name: "Chicken Caesar Salad",
+    category: 'Plates',
+    price: 12.99,
+    description: "Grilled chicken on a bed of fresh, crisp romaine lettuce, bacon bits, croutons, and shredded Parmesan cheese tossed in Caesar dressing.",
+    image: '/images/food/chicken-fingers.jpg',
+    tags: ['Crisp & Fresh'],
+    available: true,
+    featured: false,
+  },
+
+  // KIDS MENU
+  {
+    id: 'kid-1',
+    name: "Cheeseburger",
+    category: 'Kids Menu',
+    price: 9.99,
+    description: "Kid-sized smashed cheeseburger served with golden fries.",
+    image: '/images/food/single-mez.jpg',
+    tags: ['Includes Fries'],
+    available: true,
+    featured: false,
+  },
+  {
+    id: 'kid-2',
+    name: "Chicken Fingers",
+    category: 'Kids Menu',
+    price: 9.99,
+    description: "Tender chicken fingers with plum sauce and golden fries.",
+    image: '/images/food/chicken-fingers.jpg',
+    tags: ['Includes Fries'],
+    available: true,
+    featured: false,
+  },
+  {
+    id: 'kid-3',
+    name: "Fish & Chips",
+    category: 'Kids Menu',
+    price: 9.99,
+    description: "Crispy battered cod fillet with fries and tartar sauce.",
+    image: '/images/food/fish-sandwich.jpg',
+    tags: ['Includes Fries'],
+    available: true,
+    featured: false,
+  },
+  {
+    id: 'kid-4',
+    name: "Grilled Cheese",
+    category: 'Kids Menu',
+    price: 4.99,
+    description: "Warm melted cheese toastie served with crispy fries.",
+    image: '/images/food/single-mez.jpg',
+    tags: ['Includes Fries', 'Vegetarian'],
+    available: true,
+    featured: false,
+  },
+
+  // SIDES
+  {
+    id: 'side-1',
+    name: "Fries",
+    category: 'Sides',
+    price: 2.99,
+    description: "Crispy seasoned golden French fries.",
+    image: '/images/food/basket-o-fries.jpg',
+    available: true,
+    featured: false,
+  },
+  {
+    id: 'side-2',
+    name: "Onion Rings",
+    category: 'Sides',
+    price: 4.99,
+    description: "Crispy golden beer-battered onion rings.",
+    image: '/images/food/basket-o-rings.jpg',
+    available: true,
+    featured: false,
+  },
+  {
+    id: 'side-3',
+    name: "Sweet Potato Fries",
+    category: 'Sides',
+    price: 4.99,
+    description: "Sweet, crispy tossed yam fries served with chipotle dip.",
+    image: '/images/food/basket-o-fries.jpg',
+    available: true,
+    featured: false,
+  },
+  {
+    id: 'side-4',
+    name: "Caesar Salad",
+    category: 'Sides',
+    price: 3.99,
+    description: "Romaine lettuce, parmesan, croutons and creamy caesar dressing.",
+    image: '/images/food/basket-o-fries.jpg',
+    available: true,
+    featured: false,
+  },
+
+  // ADD-ONS
+  {
+    id: 'add-1',
+    name: "Bacon",
+    category: 'Add-ons',
+    price: 2.50,
+    description: "Crisp grilled smoked bacon strips.",
+    image: '/images/food/bacon-cheese-mez.jpg',
+    available: true,
+    featured: false,
+  },
+  {
+    id: 'add-2',
+    name: "Cheese",
+    category: 'Add-ons',
+    price: 1.50,
+    description: "Melted cheddar cheese slice.",
+    image: '/images/food/single-mez.jpg',
+    available: true,
+    featured: false,
+  },
+  {
+    id: 'add-3',
+    name: "Caramelized Onions",
+    category: 'Add-ons',
+    price: 1.50,
+    description: "Slow-caramelized sweet onions off the flat-top grill.",
+    image: '/images/food/erie-cheesesteak.jpg',
+    available: true,
+    featured: false,
+  },
+  {
+    id: 'add-4',
+    name: "Sauteed Mushrooms",
+    category: 'Add-ons',
+    price: 1.50,
+    description: "Savoury garlic butter sauteed mushrooms.",
+    image: '/images/food/erie-cheesesteak.jpg',
+    available: true,
+    featured: false,
+  },
+
+  // DESSERT
+  {
+    id: 'des-1',
+    name: "Cheesecake (The Cheesecake Factory)",
+    category: 'Dessert',
+    price: 9.99,
+    description: "Choice of White Chocolate Raspberry, Godiva Double Chocolate, Oreo Cookies & Cream, or Dulce de Leche.",
+    image: '/images/food/cheesecake.jpg',
+    video: '/video/categories/dessert.mp4',
+    tags: ['Cheesecake Factory', 'Decadent'],
+    available: true,
+    featured: true,
+    customizable: true,
+    toppings: [
+      { name: 'White Chocolate Raspberry', price: 0 },
+      { name: 'Godiva Double Chocolate', price: 0 },
+      { name: 'Oreo Cookies & Cream', price: 0 },
+      { name: 'Dulce de Leche', price: 0 },
+    ]
+  },
+  {
+    id: 'des-2',
+    name: "Brownie & Ice Cream",
+    category: 'Dessert',
+    price: 9.99,
+    description: "Warm and fudgy brownie topped with your choice of Vanilla or Chocolate ice cream.",
+    image: '/images/food/cheesecake.jpg',
+    tags: ['Warm Fudge'],
+    available: true,
+    featured: false,
+  },
+  {
+    id: 'des-3',
+    name: "Ice Cream",
+    category: 'Dessert',
+    price: 4.99,
+    description: "A classic choice. Vanilla or Chocolate?",
+    image: '/images/food/cheesecake.jpg',
+    tags: ['Classic Scoop'],
+    available: true,
+    featured: false,
+  },
+
+  // DRINKS (labeled DEMO DATA)
+  {
+    id: 'drk-1',
+    name: "Niagara Craft Draft Beer (Demo)",
+    category: 'Drinks',
+    price: 7.50,
+    description: "[DEMO DATA] Fresh local Niagara amber ale, poured cold on tap.",
+    image: '/images/gallery/gallery-01.jpg',
+    tags: ['DEMO DRINK', 'Local Draft'],
+    available: true,
+    featured: false,
+  },
+  {
+    id: 'drk-2',
+    name: "Ember Smoked Old Fashioned (Demo)",
+    category: 'Drinks',
+    price: 13.50,
+    description: "[DEMO DATA] Rye whisky, burnt orange bitters, grilled oak smoke.",
+    image: '/images/gallery/gallery-04.jpg',
+    tags: ['DEMO DRINK', 'Cocktail'],
+    available: true,
+    featured: false,
+  },
+  {
+    id: 'drk-3',
+    name: "Fort Erie Lemonade Punch (Demo)",
+    category: 'Drinks',
+    price: 5.50,
+    description: "[DEMO DATA] Fresh-squeezed Meyer lemons, strawberry puree, mint sprig.",
+    image: '/images/gallery/gallery-07.jpg',
+    tags: ['DEMO DRINK', 'Non-Alcoholic'],
+    available: true,
+    featured: false,
+  }
+];
+
+export const INITIAL_TESTIMONIALS = [
+  {
+    id: 'test-1',
+    author: 'Doug J.',
+    role: 'Local Patron & Family Visit',
+    quote: 'Visited with family; exceptional service, unmatched food quality, and unbeatable value for money right here in Fort Erie.',
+    verified: true,
+    highlight: 'Service & Value'
+  },
+  {
+    id: 'test-2',
+    author: 'Kim F. L.',
+    role: 'Steak Enthusiast',
+    quote: 'Compared it favorably to a well-known local steakhouse; the quality and value of the steak here is extraordinary.',
+    verified: true,
+    highlight: 'Steak Quality'
+  },
+  {
+    id: 'test-3',
+    author: 'Tabath C.',
+    role: 'Foodie & Burger Lover',
+    quote: 'Ordered the Mez Burger, Erie Cheesesteak, onion rings, and Dulce de Leche cheesecake; the whole order was excellent and the staff were wonderfully friendly.',
+    verified: true,
+    highlight: 'Mez Burger & Cheesesteak'
+  }
+];
+
+export const INITIAL_GALLERY: GalleryItem[] = [
+  {
+    id: 'gal-1',
+    title: 'The Mez Grill & Bar Atmosphere',
+    category: 'Restaurant',
+    imageUrl: '/images/gallery/gallery-01.jpg',
+    videoUrl: '/video/hero/hero-04.mp4',
+    featured: true
+  },
+  {
+    id: 'gal-2',
+    title: 'Dining Lounge & Welcoming Interior',
+    category: 'Restaurant',
+    imageUrl: '/images/gallery/gallery-02.jpg',
+    videoUrl: '/video/ambient/dining-lounge.mp4',
+    featured: true
+  },
+  {
+    id: 'gal-3',
+    title: 'Bar Tap Lines & Cold Pour',
+    category: 'Drinks',
+    imageUrl: '/images/gallery/gallery-03.jpg',
+    featured: false
+  },
+  {
+    id: 'gal-4',
+    title: 'Evening Gatherings at The Mez',
+    category: 'Events',
+    imageUrl: '/images/gallery/gallery-04.jpg',
+    featured: true
+  },
+  {
+    id: 'gal-5',
+    title: 'Kitchen Pass & Fresh Plating',
+    category: 'Food',
+    imageUrl: '/images/gallery/gallery-05.jpg',
+    videoUrl: '/video/hero/hero-01.mp4',
+    featured: true
+  },
+  {
+    id: 'gal-6',
+    title: 'Community Table & Friendly Energy',
+    category: 'Community',
+    imageUrl: '/images/gallery/gallery-06.jpg',
+    featured: false
+  },
+  {
+    id: 'gal-7',
+    title: 'Weekend Social Nights',
+    category: 'Events',
+    imageUrl: '/images/gallery/gallery-07.jpg',
+    featured: false
+  },
+  {
+    id: 'gal-8',
+    title: 'The Mez Patio & Exterior',
+    category: 'Restaurant',
+    imageUrl: '/images/gallery/gallery-08.jpg',
+    featured: false
+  }
+];
+
+export const INITIAL_EVENTS: EventItem[] = [
+  {
+    id: 'evt-1',
+    title: 'Fort Erie Community Bike & Car Meet [DEMO EVENT]',
+    category: 'Car Meets',
+    date: '2026-10-15',
+    time: '6:00 PM – 9:00 PM',
+    location: 'The Mez Parking Lot & Patio, 1267 Garrison Rd',
+    description: 'DEMO EVENT — An evening showcasing local enthusiast vehicles, live acoustic music on the patio, and kitchen specials hot off the grill.',
+    image: '/images/gallery/gallery-04.jpg',
+    video: '/video/ambient/dining-lounge.mp4',
+    isDemo: true,
+    status: 'Published'
+  },
+  {
+    id: 'evt-2',
+    title: 'Sunday Live Kitchen Grill Sessions [DEMO EVENT]',
+    category: 'Special Events',
+    date: '2026-10-18',
+    time: '4:00 PM – 8:00 PM',
+    location: 'Main Grill Bar, 1267 Garrison Rd',
+    description: 'DEMO EVENT — Chef showcase pairing specialty smash burgers with Niagara craft brews and live acoustic sound.',
+    image: '/images/gallery/gallery-07.jpg',
+    video: '/video/hero/hero-01.mp4',
+    isDemo: true,
+    status: 'Published'
+  },
+  {
+    id: 'evt-3',
+    title: 'Hockey Game Night & Wings [DEMO EVENT]',
+    category: 'Sports',
+    date: '2026-10-24',
+    time: '7:00 PM – 10:30 PM',
+    location: 'Sports Bar Lounge, 1267 Garrison Rd',
+    description: 'DEMO EVENT — Big screens tuned to the game with 2LB wing baskets and draft pitcher specials all night.',
+    image: '/images/food/wings.jpg',
+    video: '/video/hero/hero-02.mp4',
+    isDemo: true,
+    status: 'Published'
+  }
+];
+
+export const INITIAL_PROMOTIONS: Promotion[] = [
+  {
+    id: 'promo-1',
+    title: 'WEEKEND SMASH SPECIAL [DEMO PROMOTION]',
+    description: 'DEMO PROMOTION — $3 off Bacon Cheese Mez combo with crispy fries on Friday and Saturday nights.',
+    code: 'MEZSMASH3',
+    discount: '$3.00 OFF',
+    startDate: '2026-10-01',
+    endDate: '2026-11-30',
+    active: true,
+    isDemo: true
+  },
+  {
+    id: 'promo-2',
+    title: 'WING NIGHT WEDNESDAY [DEMO PROMOTION]',
+    description: 'DEMO PROMOTION — 20% off all 1LB and 2LB wing baskets every Wednesday.',
+    code: 'WINGWED20',
+    discount: '20% OFF',
+    startDate: '2026-10-01',
+    endDate: '2026-12-31',
+    active: true,
+    isDemo: true
+  }
+];
+
+export const INITIAL_CUSTOMERS: Customer[] = [
+  {
+    id: 'cust-1',
+    name: 'Doug J.',
+    email: 'doug.j@example.com',
+    phone: '289-555-0182',
+    ordersCount: 14,
+    totalSpent: 482.50,
+    rewardsPoints: 1240,
+    lastOrderDate: '2026-09-28',
+    notes: 'Regular family visits. Prefers booth seating.'
+  },
+  {
+    id: 'cust-2',
+    name: 'Kim F. L.',
+    email: 'kim.fl@example.com',
+    phone: '289-555-0144',
+    ordersCount: 8,
+    totalSpent: 310.20,
+    rewardsPoints: 780,
+    lastOrderDate: '2026-09-24',
+    notes: 'Loves Steak on the Rocks medium-rare.'
+  },
+  {
+    id: 'cust-3',
+    name: 'Tabath C.',
+    email: 'tabath.c@example.com',
+    phone: '289-555-0199',
+    ordersCount: 19,
+    totalSpent: 620.00,
+    rewardsPoints: 1550,
+    lastOrderDate: '2026-09-29',
+    notes: 'Favorite items: Mez Burger, Dulce de Leche cheesecake.'
+  }
+];
+
+export const INITIAL_REWARDS: RewardItem[] = [
+  {
+    id: 'rew-1',
+    title: 'Free Basket O\'Fries or Rings',
+    pointsRequired: 250,
+    description: 'Redeem for a piping hot basket of seasoned golden fries or crispy onion rings.',
+    active: true
+  },
+  {
+    id: 'rew-2',
+    title: '$10 Off Any Mez Burger Combo',
+    pointsRequired: 500,
+    description: 'Enjoy $10 off any single, double, or bacon cheese smash burger plate.',
+    active: true
+  },
+  {
+    id: 'rew-3',
+    title: 'Free Cheesecake Factory Slice',
+    pointsRequired: 750,
+    description: 'Your choice of Godiva Chocolate, White Choc Raspberry, Oreo, or Dulce de Leche.',
+    active: true
+  },
+  {
+    id: 'rew-4',
+    title: '$25 Off Dinner for Two',
+    pointsRequired: 1200,
+    description: 'Celebrate good food and good times with $25 off your dining check.',
+    active: true
+  }
+];

@@ -1,0 +1,6 @@
+{
+  "name": "The Mez Bar & Grill — Live Kitchen",
+  "description": "Video-first, motion-led digital dining and restaurant operations ecosystem for The Mez Bar & Grill in Fort Erie, Ontario. Powered by ZahrionTech.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
